@@ -11,8 +11,8 @@ public class PathologyMacroHandler : MonoBehaviour {
     public Image preview;
     public Texture2D image = null;
 
-    public void LoadPathologuMacroButton() {
-        string path = EditorUtility.OpenFilePanel( "Select DICOMDIR..", defaultPath, "" );
+    public void LoadPathologyMacroButton() {
+        string path = EditorUtility.OpenFilePanel( "Select Pathology Macro..", defaultPath, "" );
         if( path.Length != 0 ) {
             byte[] data;
             data = File.ReadAllBytes( path );
