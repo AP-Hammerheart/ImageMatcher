@@ -21,9 +21,15 @@ public class DICOMHandler : MonoBehaviour {
     public Transform thumbnailParent;
     public Text imageNumber;
 
-    public List<Sprite> dicomImages = new List<Sprite>();
+    public List<DICOMImageData> dicomImages = new List<DICOMImageData>();
+
+    public int selectedImageIndex {
+        get; set;
+    }
+
     
     private void Start() {
+        preview.sprite = null;
     }
 
     public void LoadDICOMDIR() {
@@ -49,17 +55,26 @@ public class DICOMHandler : MonoBehaviour {
                             DicomImage dcmImage = new DicomImage( dicomfile );
                             Texture2D tex = new Texture2D( dcmImage.RenderImage().AsTexture2D().width, dcmImage.RenderImage().AsTexture2D().width);
                             tex = dcmImage.RenderImage().AsTexture2D();
-                            Sprite s = Sprite.Create( tex, new Rect( 0, 0, tex.width, tex.height ), Vector2.zero );
-                            dicomImages.Add( s );
+                            Sprite sprite = Sprite.Create( tex, new Rect( 0, 0, tex.width, tex.height ), Vector2.zero );
+
+                            string pr = patientRecord.Get<string>( DicomTag.PatientName ) + ";"+ patientRecord.Get<string>( DicomTag.PatientID ).ToString();
+                            string sr = studyRecord.Get<string>( DicomTag.StudyInstanceUID ).ToString();
+                            string se = seriesRecord.Get<string>( DicomTag.SeriesInstanceUID ).ToString();
+                            string ir = imageRecord.Get<string>( DicomTag.ReferencedSOPInstanceUIDInFile ) + ";" + imageRecord.Get<string>( DicomTag.ReferencedFileID ).ToString();
+
+                            DICOMImageData data = new DICOMImageData( pr, sr, se, ir, dicomImages.Count, sprite );
+
+                            dicomImages.Add( data );
+
                             Button b = Instantiate( thumbnailPrefab, thumbnailParent ) as Button;
-                            b.GetComponent<Image>().sprite = s;
+                            b.GetComponent<Image>().sprite = sprite;
                             b.GetComponent<DICOMThumbnailClick>().preview = preview;
                             b.GetComponent<DICOMThumbnailClick>().Index = dicomImages.Count;
                         }
                     }
                 }
             }
-            preview.sprite = dicomImages[0];
+            preview.sprite = dicomImages[0].Image;
             //set up slider
             searchSlider.maxValue = dicomImages.Count-1;
             //Update image number
@@ -68,13 +83,14 @@ public class DICOMHandler : MonoBehaviour {
     }
 
     public void SearchSlideValueChange() {
-        preview.sprite = dicomImages[(int)searchSlider.value];
+        preview.sprite = dicomImages[(int)searchSlider.value].Image;
         UpdateImageNumber( (int)searchSlider.value + 1 );
     }
 
     private void UpdateImageNumber(int number) {
         imageNumber.text = number + " / " + dicomImages.Count.ToString();
         thumbnailScrollBar.value = ((float)number - 0f) / ((float)dicomImages.Count - 0f);
+        selectedImageIndex = number - 1;
     }
 
 }
