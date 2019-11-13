@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DICOMImageData {
+public class DICOMImageData : ImageData {
 
     public string PatientRecord {
         get;
@@ -21,16 +21,13 @@ public class DICOMImageData {
         get;
     }
 
-    public Sprite Image {
-        get;
-    }
 
-    public DICOMImageData( string patientRecord, string studyRecord, string seriesRecord, string imageRecord, int imageIndex, Sprite image ) {
+    public DICOMImageData( string patientRecord, string studyRecord, string seriesRecord, string imageRecord, int imageIndex, string imageSource, Sprite image ) 
+           : base(imageSource, image) {
         this.PatientRecord = patientRecord;
         this.StudyRecord = studyRecord;
         this.SeriesRecord = seriesRecord;
         this.ImageRecord = imageRecord;
         this.ImageIndex = imageIndex;
-        this.Image = image;
     }
 }

@@ -62,9 +62,9 @@ public class DICOMHandler : MonoBehaviour {
                             string se = seriesRecord.Get<string>( DicomTag.SeriesInstanceUID ).ToString();
                             string ir = imageRecord.Get<string>( DicomTag.ReferencedSOPInstanceUIDInFile ) + ";" + imageRecord.Get<string>( DicomTag.ReferencedFileID ).ToString();
 
-                            DICOMImageData data = new DICOMImageData( pr, sr, se, ir, dicomImages.Count, sprite );
+                            //DICOMImageData data = new DICOMImageData( pr, sr, se, ir, dicomImages.Count, sprite );
 
-                            dicomImages.Add( data );
+                            //dicomImages.Add( data );
 
                             Button b = Instantiate( thumbnailPrefab, thumbnailParent ) as Button;
                             b.GetComponent<Image>().sprite = sprite;
