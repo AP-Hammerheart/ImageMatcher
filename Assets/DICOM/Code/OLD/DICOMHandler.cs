@@ -35,7 +35,6 @@ public class DICOMHandler : MonoBehaviour {
     public void LoadDICOMDIR() {
         string path = EditorUtility.OpenFilePanel( "Select DICOMDIR..", defaultPath, "" );
         if( path.Length != 0 ) {
-            print( path );
             DicomDirectory dicomDir = Dicom.Media.DicomDirectory.Open( path );
 
             foreach( var patientRecord in dicomDir.RootDirectoryRecordCollection ) {

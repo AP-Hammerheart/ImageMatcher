@@ -35,7 +35,8 @@ public class LoadMacroButton : MonoBehaviour {
 
             PreviewImageWindow piw = Instantiate( previewWindowPrefab, WorkArea, false );
             piw.GetComponent<WindowBar>().windowName.text = path;
-            piw.image.sprite = sprite;
+            piw.image.sprite = data.Image;
+            piw.image.SetNativeSize();
         }
     }
 

@@ -29,7 +29,6 @@ public class LoadDICOMButton : MonoBehaviour {
     public void LoadDICOMDIR() {
         string path = EditorUtility.OpenFilePanel( "Select DICOMDIR..", defaultPath, "" );
         if( path.Length != 0 ) {
-            print( path );
             DicomDirectory dicomDir = Dicom.Media.DicomDirectory.Open( path );
 
             DICOMDirData dicomdirData = Instantiate( DICOMDirDataPrefab, Vector3.zero, Quaternion.identity, DICOMHandler ) as DICOMDirData;
@@ -53,6 +52,7 @@ public class LoadDICOMButton : MonoBehaviour {
                             dicomfile = dicomfile.Replace( "DICOMDIR", "" );
                             DicomImage dcmImage = new DicomImage( dicomfile );
                             Texture2D tex = new Texture2D( dcmImage.RenderImage().AsTexture2D().width, dcmImage.RenderImage().AsTexture2D().width );
+                            tex = dcmImage.RenderImage().AsTexture2D();
                             Sprite sprite = Sprite.Create( tex, new Rect( 0, 0, tex.width, tex.height ), Vector2.zero );
 
                             DICOMImageData imageData = new DICOMImageData( patient, study, series, image, imageIndex, dicomfile, sprite );
@@ -72,6 +72,7 @@ public class LoadDICOMButton : MonoBehaviour {
             if( dicomdirData.images[0] != null ) {
                 piw.GetComponent<WindowBar>().windowName.text = dicomdirData.images[0].PatientRecord;
                 piw.image.sprite = dicomdirData.images[0].Image;
+                piw.image.SetNativeSize();
                 tw.GetComponent<WindowBar>().windowName.text = dicomdirData.images[0].PatientRecord;
                 dicomdirData.name = dicomdirData.images[0].PatientRecord;
             } else {

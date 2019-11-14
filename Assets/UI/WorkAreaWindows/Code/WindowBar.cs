@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 
 public class WindowBar : MonoBehaviour {
 
-    public GameObject Content;
+    public GameObject WindowContent;
+    public GameObject DataContent;
     public Text windowName;
 
     // Start is called before the first frame update
@@ -25,6 +26,6 @@ public class WindowBar : MonoBehaviour {
     }
 
     public void ButtonMinimizePress() {
-        Content.SetActive( !Content.activeSelf );
+        WindowContent.SetActive( !WindowContent.activeSelf );
     }
 }
