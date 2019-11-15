@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using ToolVariables;
 
-public class ImageController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler {
+public class ImageController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
 
     private Vector3 distance = Vector3.zero;
     private Vector3 offset = Vector3.zero;
@@ -13,19 +13,13 @@ public class ImageController : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private float x = 1f, y = 1f;
 
     public CanvasGroup moveSelectionGroup;
+    public GameObject markAreaPrefab;
 
     private void Update() {
         if( ToolMode.toolMode == ToolModes.PanZoom && isMouseInside) {
             x += transform.localScale.x * Input.GetAxis( "Mouse ScrollWheel" );
             y += transform.localScale.y * Input.GetAxis( "Mouse ScrollWheel" );
             transform.localScale = new Vector3( x, y, 1 );
-            //moveSelectionGroup.interactable = false;
-            //moveSelectionGroup.blocksRaycasts = false;
-            //moveSelectionGroup.transform.SetParent( transform.parent );
-        } else if( ToolMode.toolMode == ToolModes.MarkArea ) {
-            //moveSelectionGroup.interactable = true;
-            //moveSelectionGroup.blocksRaycasts = true;
-            //moveSelectionGroup.transform.SetParent( transform );
         }
     }
 
@@ -34,7 +28,6 @@ public class ImageController : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             Vector3 worldPos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
             worldPos.z = transform.position.z;
             offset = worldPos - transform.position;
-        } else if( ToolMode.toolMode == ToolModes.PanZoom ) {
         }
     }
 
@@ -44,14 +37,12 @@ public class ImageController : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             worldPos.z = transform.position.z;
             worldPos = worldPos - offset;
             transform.position = worldPos;
-        } else if( ToolMode.toolMode == ToolModes.PanZoom ) {
         }
     }
 
     public void OnEndDrag( PointerEventData eventData ) {
         if( ToolMode.toolMode == ToolModes.PanZoom ) {
             offset = Vector3.zero;
-        } else if( ToolMode.toolMode == ToolModes.PanZoom ) {
         }
     }
 
@@ -61,5 +52,18 @@ public class ImageController : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnPointerExit( PointerEventData eventData ) {
         isMouseInside = false;
+    }
+
+    public void OnPointerClick( PointerEventData eventData ) {
+        if( ToolMode.toolMode == ToolModes.CreateMarkArea /*&& transform.childCount == 0*/ ) {
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+            worldPos.z = transform.position.z;
+            markAreaPrefab.SetActive( true );
+            markAreaPrefab.transform.position = worldPos;
+            //GameObject msp = Instantiate( markAreaPrefab, worldPos, Quaternion.identity, transform.parent );
+            //msp.GetComponent<MarkSquare>().transformModeParent = transform;
+            //msp.GetComponent<MarkSquare>().panModeParent = transform.parent;
+            ToolMode.toolMode = ToolModes.TransformMarkArea;
+        }
     }
 }

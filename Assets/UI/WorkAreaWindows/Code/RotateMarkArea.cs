@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using ToolVariables;
 
 public class RotateMarkArea : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
@@ -22,13 +23,15 @@ public class RotateMarkArea : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     }
 
     public void OnDrag( PointerEventData eventData ) {
-        Vector2 mp = Camera.main.ScreenToWorldPoint( Input.mousePosition );
-        Vector2 dir = mp - (Vector2)transform.parent.position;
+        if( ToolMode.toolMode == ToolModes.TransformMarkArea ) {
+            Vector2 mp = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+            Vector2 dir = mp - (Vector2)transform.parent.position;
 
-        float angle = Mathf.Atan2( dir.y, dir.x ) * Mathf.Rad2Deg - startAngle;
+            float angle = Mathf.Atan2( dir.y, dir.x ) * Mathf.Rad2Deg - startAngle;
 
-        if( angle < transform.parent.eulerAngles.z ) {
-            transform.parent.eulerAngles = new Vector3( 0, 0, angle );
+            if( angle < transform.parent.eulerAngles.z ) {
+                transform.parent.eulerAngles = new Vector3( 0, 0, angle );
+            }
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using ToolVariables;
 
 public class MoveMarkArea : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     // Start is called before the first frame update
@@ -19,9 +20,11 @@ public class MoveMarkArea : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     }
 
     public void OnDrag( PointerEventData eventData ) {
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
-        worldPos.z = transform.parent.position.z;
-        transform.parent.position = worldPos;
+        if( ToolMode.toolMode == ToolModes.TransformMarkArea ) {
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+            worldPos.z = transform.parent.position.z;
+            transform.parent.position = worldPos;
+        }
     }
 
     public void OnEndDrag( PointerEventData eventData ) {

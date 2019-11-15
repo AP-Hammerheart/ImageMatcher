@@ -5,7 +5,16 @@ using ToolVariables;
 
 public class MarkToolButton : MonoBehaviour {
 
-    public void MarkToolButtonPress() {
-        ToolMode.toolMode = ToolModes.MarkArea;
+    public GameObject markSquarePrefab;
+    public Transform workArea;
+
+    public void CreateMarkToolButtonPress() {
+        ToolMode.toolMode = ToolModes.CreateMarkArea;
+
+        GameObject msp = Instantiate( markSquarePrefab, workArea ) as GameObject;
     }
-}
+
+    public void TransformMarkToolButtonPress() {
+        ToolMode.toolMode = ToolModes.TransformMarkArea;
+    }
+}   

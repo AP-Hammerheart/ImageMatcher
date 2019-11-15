@@ -1,7 +1,8 @@
 ﻿
 public enum ToolModes {
     PanZoom,
-    MarkArea,
+    CreateMarkArea,
+    TransformMarkArea,
 }
 
 namespace ToolVariables {
