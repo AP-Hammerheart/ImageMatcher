@@ -2,32 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DICOMImageData : ImageData {
+public class DICOMImageData : MonoBehaviour {
 
+    public string ImageSource {
+        get; set;
+    }
     public string PatientRecord {
-        get;
+        get; set;
     }
     public string StudyRecord {
-        get;
+        get; set;
     }
     public string SeriesRecord {
-        get;
+        get; set;
     }
     public string ImageRecord {
-        get;
+        get; set;
     }
 
     public int ImageIndex {
-        get;
+        get; set;
+    }
+    public Sprite Image {
+        get; set;
     }
 
-
-    public DICOMImageData( string patientRecord, string studyRecord, string seriesRecord, string imageRecord, int imageIndex, string imageSource, Sprite image ) 
-           : base(imageSource, image) {
+    public DICOMImageData( string patientRecord, string studyRecord, string seriesRecord, string imageRecord, int imageIndex, string imageSource, Sprite image ) {
+        this.ImageSource = imageSource;
         this.PatientRecord = patientRecord;
         this.StudyRecord = studyRecord;
         this.SeriesRecord = seriesRecord;
         this.ImageRecord = imageRecord;
         this.ImageIndex = imageIndex;
+        this.Image = image;
+    }
+
+    public void Initialize( string patientRecord, string studyRecord, string seriesRecord, string imageRecord, int imageIndex, string imageSource, Sprite image ) {
+        this.ImageSource = imageSource;
+        this.PatientRecord = patientRecord;
+        this.StudyRecord = studyRecord;
+        this.SeriesRecord = seriesRecord;
+        this.ImageRecord = imageRecord;
+        this.ImageIndex = imageIndex;
+        this.Image = image;
     }
 }

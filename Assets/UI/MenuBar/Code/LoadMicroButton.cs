@@ -18,18 +18,21 @@ public class LoadMicroButton : MonoBehaviour {
 
     [Header( "Prefabs" )]
     public PreviewImageWindow previewWindowPrefab;
-    public PathologyMicroData pathologyMicroDataPrefab;
+    //public PathologyMicroData pathologyMicroDataPrefab;
 
     public void LoadPathologyMicroButton() {
         string filePath = EditorUtility.OpenFilePanel( "Select Pathology Micro..", defaultPath, "" );
         if( !filePath.Contains( ".ndpi" ) ) {
             filePath = "";
         } else {
-            PathologyMicroData pmd = Instantiate( pathologyMicroDataPrefab, Vector3.zero, Quaternion.identity, PathologyMicroHandler ) as PathologyMicroData;
-            pmd.imagePath = filePath;
+            //PathologyMicroData pmd = Instantiate( pathologyMicroDataPrefab, Vector3.zero, Quaternion.identity, PathologyMicroHandler ) as PathologyMicroData;
+            //pmd.imagePath = filePath;
 
             PreviewImageWindow piw = Instantiate( previewWindowPrefab, WorkArea, false );
+            piw.gameObject.AddComponent<PathologyMicroData>();
+            piw.GetComponent<PathologyMicroData>().imagePath = filePath;
             piw.GetComponent<WindowBar>().windowName.text = filePath;
+            piw.gameObject.name = filePath;
         }
     }
 }

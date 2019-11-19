@@ -18,7 +18,7 @@ public class LoadMacroButton : MonoBehaviour {
 
     [Header( "Prefabs" )]
     public PreviewImageWindow previewWindowPrefab;
-    public PathologyMacroData pathologyMacroDataPrefab;
+    //public PathologyMacroData pathologyMacroDataPrefab;
 
     public void LoadPathologyMacroButton() {
         string path = EditorUtility.OpenFilePanel( "Select Pathology Macro..", defaultPath, "" );
@@ -30,11 +30,14 @@ public class LoadMacroButton : MonoBehaviour {
             Sprite sprite = Sprite.Create( image, new Rect( 0, 0, image.width, image.height ), Vector2.zero );
 
             ImageData data = new ImageData( path, sprite );
-            PathologyMacroData pmd = Instantiate( pathologyMacroDataPrefab, Vector3.zero, Quaternion.identity, PathologyMacroHandler ) as PathologyMacroData;
-            pmd.imageData = data;
+            //PathologyMacroData pmd = Instantiate( pathologyMacroDataPrefab, Vector3.zero, Quaternion.identity, PathologyMacroHandler ) as PathologyMacroData;
+            //pmd.imageData = data;
 
             PreviewImageWindow piw = Instantiate( previewWindowPrefab, WorkArea, false );
+            piw.gameObject.AddComponent<PathologyMacroData>();
+            piw.GetComponent<PathologyMacroData>().imageData = data;
             piw.GetComponent<WindowBar>().windowName.text = path;
+            piw.gameObject.name = path;
             piw.image.sprite = data.Image;
             piw.image.SetNativeSize();
         }

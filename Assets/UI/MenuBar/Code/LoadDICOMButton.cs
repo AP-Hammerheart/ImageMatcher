@@ -24,15 +24,14 @@ public class LoadDICOMButton : MonoBehaviour {
     public PreviewImageWindow previewWindowPrefab;
     public ThumbnailWindow thumbnailWindowPrefab;
     public ThumbnailButton thumbnailButtonPrefab;
-    public DICOMDirData DICOMDirDataPrefab;
 
     public void LoadDICOMDIR() {
         string path = EditorUtility.OpenFilePanel( "Select DICOMDIR..", defaultPath, "" );
         if( path.Length != 0 ) {
             DicomDirectory dicomDir = Dicom.Media.DicomDirectory.Open( path );
 
-            DICOMDirData dicomdirData = Instantiate( DICOMDirDataPrefab, Vector3.zero, Quaternion.identity, DICOMHandler ) as DICOMDirData;
             PreviewImageWindow piw = Instantiate( previewWindowPrefab, WorkArea, false );
+            piw.gameObject.AddComponent<DICOMImageData>();
             ThumbnailWindow tw = Instantiate( thumbnailWindowPrefab, WorkArea, false );
 
             foreach( var patientRecord in dicomDir.RootDirectoryRecordCollection ) {
@@ -55,13 +54,15 @@ public class LoadDICOMButton : MonoBehaviour {
                             tex = dcmImage.RenderImage().AsTexture2D();
                             Sprite sprite = Sprite.Create( tex, new Rect( 0, 0, tex.width, tex.height ), Vector2.zero );
 
-                            DICOMImageData imageData = new DICOMImageData( patient, study, series, image, imageIndex, dicomfile, sprite );
-                            dicomdirData.images.Add( imageData );
+                            piw.GetComponent<DICOMImageData>().Initialize( patient, study, series, image, imageIndex, dicomfile, sprite );
+                            
 
                             ThumbnailButton tb = Instantiate( thumbnailButtonPrefab, tw.content );
+                            tb.gameObject.AddComponent<DICOMImageData>().Initialize( patient, study, series, image, imageIndex, dicomfile, sprite );
                             tb.image.sprite = sprite;
                             tb.text.text = (imageIndex + 1).ToString();
                             tb.previewImageWindow = piw;
+                            
 
                             imageIndex++;
                         }
@@ -69,14 +70,11 @@ public class LoadDICOMButton : MonoBehaviour {
                 }
             }
 
-            if( dicomdirData.images[0] != null ) {
-                piw.GetComponent<WindowBar>().windowName.text = dicomdirData.images[0].PatientRecord;
-                piw.image.sprite = dicomdirData.images[0].Image;
-                piw.image.SetNativeSize();
-                tw.GetComponent<WindowBar>().windowName.text = dicomdirData.images[0].PatientRecord;
-                dicomdirData.name = dicomdirData.images[0].PatientRecord;
+            if( piw.GetComponent<DICOMImageData>().Image != null ) {
+                piw.GetComponent<WindowBar>().windowName.text = piw.GetComponent<DICOMImageData>().PatientRecord;
+                tw.GetComponent<WindowBar>().windowName.text = piw.GetComponent<DICOMImageData>().PatientRecord;
+                tw.content.GetChild( 0 ).GetComponent<ThumbnailButton>().ButtonPress();
             } else {
-                Destroy( dicomdirData );
                 Destroy( piw );
                 Destroy( tw );
             }
