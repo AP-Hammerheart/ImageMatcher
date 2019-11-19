@@ -25,5 +25,5 @@ public class ImageConnections {
         public string DICOMSeriesRecord;
         public string DICOMImageRecord;
     }
-    public Image[] Images;
+    public List<Image> Images = new List<Image>();
 }
