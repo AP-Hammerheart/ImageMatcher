@@ -21,7 +21,7 @@ public class LoadDICOMButton : MonoBehaviour {
     public Transform DICOMHandler;
 
     [Header( "Prefabs" )]
-    public PreviewImageWindow previewWindowPrefab;
+    public DICOMPreviewImageWindow previewWindowPrefab;
     public ThumbnailWindow thumbnailWindowPrefab;
     public ThumbnailButton thumbnailButtonPrefab;
 
@@ -30,10 +30,10 @@ public class LoadDICOMButton : MonoBehaviour {
         if( path.Length != 0 ) {
             DicomDirectory dicomDir = Dicom.Media.DicomDirectory.Open( path );
 
-            PreviewImageWindow piw = Instantiate( previewWindowPrefab, WorkArea, false );
+            DICOMPreviewImageWindow piw = Instantiate( previewWindowPrefab, WorkArea, false );
             piw.gameObject.AddComponent<DICOMImageData>();
             ThumbnailWindow tw = Instantiate( thumbnailWindowPrefab, WorkArea, false );
-
+            piw.tw = tw;
             foreach( var patientRecord in dicomDir.RootDirectoryRecordCollection ) {
                 string patient = "Patient: " + patientRecord.Get<string>( DicomTag.PatientName ) + "." + patientRecord.Get<string>( DicomTag.PatientID ).ToString();
 
@@ -62,6 +62,7 @@ public class LoadDICOMButton : MonoBehaviour {
                             tb.image.sprite = sprite;
                             tb.text.text = (imageIndex + 1).ToString();
                             tb.previewImageWindow = piw;
+                            tb.gameObject.name = imageIndex.ToString();
                             
 
                             imageIndex++;
@@ -73,7 +74,14 @@ public class LoadDICOMButton : MonoBehaviour {
             if( piw.GetComponent<DICOMImageData>().Image != null ) {
                 piw.GetComponent<WindowBar>().windowName.text = piw.GetComponent<DICOMImageData>().PatientRecord;
                 tw.GetComponent<WindowBar>().windowName.text = piw.GetComponent<DICOMImageData>().PatientRecord;
-                tw.content.GetChild( 0 ).GetComponent<ThumbnailButton>().ButtonPress();
+                //tw.content.GetChild( 0 ).GetComponent<ThumbnailButton>().ButtonPress();
+                piw.Initialize( 1, tw.content.childCount-1 );
+                piw.imageL.sprite = tw.content.GetChild( 0 ).GetComponent<ThumbnailButton>().image.sprite;
+                piw.imageL.SetNativeSize();
+                piw.didL = tw.content.GetChild( 0 ).GetComponent<DICOMImageData>();
+                piw.imageR.sprite = tw.content.GetChild( tw.content.childCount-1 ).GetComponent<ThumbnailButton>().image.sprite;
+                piw.imageR.SetNativeSize();
+                piw.didR = tw.content.GetChild( tw.content.childCount - 1 ).GetComponent<DICOMImageData>();
             } else {
                 Destroy( piw );
                 Destroy( tw );
