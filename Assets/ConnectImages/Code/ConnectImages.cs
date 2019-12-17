@@ -9,6 +9,8 @@ public class ConnectImages : MonoBehaviour {
 
     public Transform workArea;
 
+    public Text labelText;
+
     public string outputDirectory = "D:\\Other Projects\\Hololens4Pathology and Radiology\\Pancreas_T2747-19\\connections.json";
 
     public List<ImageConnections> imageConnections = new List<ImageConnections>();
@@ -23,9 +25,110 @@ public class ConnectImages : MonoBehaviour {
                        workArea.GetComponentsInChildren<PathologyMacroData>().Length +
                        workArea.GetComponentsInChildren<PathologyMicroData>().Length;
         ImageConnections ic = new ImageConnections();
-
+        int connectIndex = 0;
         print( nrImages + " " + workArea.childCount );
         for( int i = 0; i < workArea.childCount; i++ ) {
+            //check if radiology and insert
+            DICOMPreviewImageWindow dpiw = workArea.GetChild( i ).GetComponent<DICOMPreviewImageWindow>();
+            ImageConnections.RadiologyImage ri = new ImageConnections.RadiologyImage();
+            if( dpiw != null ) {                
+                ri.DICOMImageRecord = dpiw.didL.ImageRecord;
+                ri.DICOMPatientRecord = dpiw.didL.PatientRecord;
+                ri.DICOMStudyRecord = dpiw.didL.StudyRecord;
+                ri.DICOMSeriesRecord = dpiw.didL.SeriesRecord;
+                ri.DICOMImageRecord = dpiw.didL.ImageRecord;
+                
+                ri.imageSource = dpiw.didL.ImageSource;
+                
+                ri.imageIndexStart = (int)dpiw.rangeSlider.LowValue;
+                ri.imageIndexEnd = (int)dpiw.rangeSlider.HighValue;
+
+                RectTransform markArea = dpiw.imageL.transform.GetComponentInChildren<RectTransform>();
+                if( markArea != null ) {
+                    Vector3[] corners = new Vector3[4];
+                    markArea.GetLocalCorners( corners );
+                    ri.P1x = markArea.localPosition.x + corners[0].x;
+                    ri.P1y = markArea.localPosition.y + corners[0].y;
+                    ri.P2x = markArea.localPosition.x + corners[1].x;
+                    ri.P2y = markArea.localPosition.y + corners[1].y;
+                    ri.P3x = markArea.localPosition.x + corners[2].x;
+                    ri.P3y = markArea.localPosition.y + corners[2].y;
+                    ri.P4x = markArea.localPosition.x + corners[3].x;
+                    ri.P4y = markArea.localPosition.y + corners[3].y;
+                } else {
+                    ri.P1x = -1;
+                    ri.P1y = -1;
+                    ri.P2x = -1;
+                    ri.P2y = -1;
+                    ri.P3x = -1;
+                    ri.P3y = -1;
+                    ri.P4x = -1;
+                    ri.P4y = -1;
+                }
+                ic.Images[connectIndex].dicom.Add( ri );
+                continue;
+            }
+
+            //check if macro and insert
+            MacroPreviewImageWindow mpiw = workArea.GetChild( i ).GetComponent<MacroPreviewImageWindow>();
+            ImageConnections.PathologyMacroImage pmi = new ImageConnections.PathologyMacroImage();
+            if( mpiw != null ) {
+                pmi.label = labelText.text;
+                pmi.imageSource = mpiw.GetComponent<WindowBar>().windowName.text;
+                pmi.imageZoomLevel = int.Parse( mpiw.zoomLevelText.text ); //0 = normal zoom.
+
+                RectTransform markArea = mpiw.image.transform.GetComponentInChildren<RectTransform>();
+                if( markArea != null ) {
+                    Vector3[] corners = new Vector3[4];
+                    markArea.GetLocalCorners( corners );
+                    pmi.P1x = markArea.localPosition.x + corners[0].x;
+                    pmi.P1y = markArea.localPosition.y + corners[0].y;
+                    pmi.P2x = markArea.localPosition.x + corners[1].x;
+                    pmi.P2y = markArea.localPosition.y + corners[1].y;
+                    pmi.P3x = markArea.localPosition.x + corners[2].x;
+                    pmi.P3y = markArea.localPosition.y + corners[2].y;
+                    pmi.P4x = markArea.localPosition.x + corners[3].x;
+                    pmi.P4y = markArea.localPosition.y + corners[3].y;
+                } else {
+                    pmi.P1x = -1;
+                    pmi.P1y = -1;
+                    pmi.P2x = -1;
+                    pmi.P2y = -1;
+                    pmi.P3x = -1;
+                    pmi.P3y = -1;
+                    pmi.P4x = -1;
+                    pmi.P4y = -1;
+                }
+                ic.Images[connectIndex].macro.Add( pmi );
+                continue;
+            }
+
+            //check if histology
+            PreviewImageWindow piw = workArea.GetChild( i ).GetComponent<PreviewImageWindow>();
+            ImageConnections.PathologyHistologyImage phi = new ImageConnections.PathologyHistologyImage();
+            if( piw != null ) {
+                phi.imageSource = piw.GetComponent<WindowBar>().windowName.text;
+                ic.Images[connectIndex].histology.Add( phi );
+                continue;
+            }
+
+            //if( ic.Images[connectIndex].dicom[0] != null &&
+            //    ic.Images[connectIndex].macro[0] != null &&
+            //    ic.Images[connectIndex].histology[0] != null ) {
+            //    connectIndex++;
+            //}
+            imageConnections.Add( ic );
+            for( int j = 0; j < imageConnections.Count; j++ ) {
+                print( j );
+            }
+            string s = JsonHelper.ToJson<ImageConnections>( imageConnections.ToArray(), true );
+            print( s );
+            print( Application.dataPath );
+            File.WriteAllText( Application.dataPath + "\\connections.json", s, System.Text.Encoding.UTF8 );
+
+
+
+
             //Transform t = workArea.GetChild( i );
             //DICOMImageData did = t.GetComponent<DICOMImageData>();
             //PathologyMacroData pmd1 = t.GetComponent<PathologyMacroData>();

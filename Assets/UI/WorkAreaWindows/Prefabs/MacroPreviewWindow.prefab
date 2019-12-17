@@ -255,7 +255,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -16.035, y: 0.0074997}
+  m_AnchoredPosition: {x: -16.035, y: 0.007499695}
   m_SizeDelta: {x: -32.069, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5294188358864339417
@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 5322180498395321822}
   - component: {fileID: 5322180498395321820}
   - component: {fileID: 347380476788045170}
-  - component: {fileID: 1788949205510448042}
+  - component: {fileID: 3991321646245835753}
   m_Layer: 5
   m_Name: MacroPreviewWindow
   m_TagString: Untagged
@@ -578,7 +578,7 @@ MonoBehaviour:
   WindowContent: {fileID: 5322180499805686694}
   DataContent: {fileID: 0}
   windowName: {fileID: 5322180499588058933}
---- !u!114 &1788949205510448042
+--- !u!114 &3991321646245835753
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -587,10 +587,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5322180498395321824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3eafaeef416e4b499162a69c745bc03, type: 3}
+  m_Script: {fileID: 11500000, guid: 663490b1a6217464e9e965b118fb9e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 5322180498517551653}
+  zoomLevelText: {fileID: 1375634278520374124}
 --- !u!1 &5322180498493615011
 GameObject:
   m_ObjectHideFlags: 0

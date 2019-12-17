@@ -7,7 +7,7 @@ using UnityEngine;
 public class ImageConnections {
 
     [Serializable]
-    public class RadiologyImages {
+    public class RadiologyImage {
         public string DICOMPatientRecord;
         public string DICOMStudyRecord;
         public string DICOMSeriesRecord;
@@ -26,7 +26,7 @@ public class ImageConnections {
     }
 
     [Serializable]
-    public class PathologyMacroImages {
+    public class PathologyMacroImage {
         public string label;
         public string imageSource;
         public int imageZoomLevel; //0 = normal zoom.
@@ -39,14 +39,19 @@ public class ImageConnections {
         public float P4x;
         public float P4y;
     }
+
+    [Serializable]
+    public class PathologyHistologyImage {
+        public string imageSource;
+    }
     
     [Serializable]
     public class RadiologyPathologyConnection {
 
         public string label;
-        public List<RadiologyImages> dicom = new List<RadiologyImages>();
-        public List<PathologyMacroImages> macro = new List<PathologyMacroImages>();
-        public string histology;
+        public List<RadiologyImage> dicom = new List<RadiologyImage>();
+        public List<PathologyMacroImage> macro = new List<PathologyMacroImage>();
+        public List<PathologyHistologyImage> histology = new List<PathologyHistologyImage>();
 
     }
     public List<RadiologyPathologyConnection> Images = new List<RadiologyPathologyConnection>();
