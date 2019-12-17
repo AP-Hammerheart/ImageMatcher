@@ -29,7 +29,6 @@ public class ConnectImages : MonoBehaviour {
         int connectIndex = 0;
         print( nrImages + " " + workArea.childCount );
         for( int i = 0; i < workArea.childCount; i++ ) {
-            print( "a" );
             //check if radiology and insert
             DICOMPreviewImageWindow dpiw = workArea.GetChild( i ).GetComponent<DICOMPreviewImageWindow>();
             ImageConnections.RadiologyImage ri = new ImageConnections.RadiologyImage();
@@ -70,7 +69,7 @@ public class ConnectImages : MonoBehaviour {
                 ic.Images[connectIndex].dicom.Add( ri );
                 continue;
             }
-            print( "a" );
+
             //check if macro and insert
             MacroPreviewImageWindow mpiw = workArea.GetChild( i ).GetComponent<MacroPreviewImageWindow>();
             ImageConnections.PathologyMacroImage pmi = new ImageConnections.PathologyMacroImage();
@@ -78,7 +77,6 @@ public class ConnectImages : MonoBehaviour {
                 pmi.label = labelText.text;
                 pmi.imageSource = mpiw.GetComponent<WindowBar>().windowName.text;
                 pmi.imageZoomLevel = int.Parse( mpiw.zoomLevelText.text ); //0 = normal zoom.
-                print( "a" );
                 RectTransform markArea = mpiw.image.transform.GetComponentInChildren<RectTransform>();
                 if( markArea.gameObject.activeSelf ) {
                     Vector3[] corners = new Vector3[4];
@@ -101,12 +99,9 @@ public class ConnectImages : MonoBehaviour {
                     pmi.P4x = -1;
                     pmi.P4y = -1;
                 }
-                print( "a" );
                 ic.Images[connectIndex].macro.Add( pmi );
-                print( "a" );
                 continue;
             }
-            print( "a" );
             //check if histology
             PreviewImageWindow piw = workArea.GetChild( i ).GetComponent<PreviewImageWindow>();
             ImageConnections.PathologyHistologyImage phi = new ImageConnections.PathologyHistologyImage();
@@ -122,18 +117,6 @@ public class ConnectImages : MonoBehaviour {
             //    ic.Images[connectIndex].histology[0] != null ) {
             //    connectIndex++;
             //}
-            print( "a" );
-            imageConnections.Add( ic );
-            for( int j = 0; j < imageConnections.Count; j++ ) {
-                print( j );
-            }
-            string s = JsonHelper.ToJson<ImageConnections>( imageConnections.ToArray(), true );
-            print( s );
-            print( Application.dataPath );
-            File.WriteAllText( Application.dataPath + "\\connections.json", s, System.Text.Encoding.UTF8 );
-
-
-
 
             //Transform t = workArea.GetChild( i );
             //DICOMImageData did = t.GetComponent<DICOMImageData>();
@@ -199,6 +182,13 @@ public class ConnectImages : MonoBehaviour {
             //print( Application.dataPath );
             //File.WriteAllText( Application.dataPath + "\\connections.json", s, System.Text.Encoding.UTF8 );
         }
-
+        imageConnections.Add( ic );
+        //for( int j = 0; j < imageConnections.Count; j++ ) {
+        //    print( j );
+        //}
+        string s = JsonHelper.ToJson<ImageConnections>( imageConnections.ToArray(), true );
+        print( s );
+        print( Application.dataPath );
+        File.WriteAllText( Application.dataPath + "\\connections.json", s, System.Text.Encoding.UTF8 );
     }
 }

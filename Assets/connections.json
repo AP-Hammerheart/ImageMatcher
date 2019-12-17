@@ -1,0 +1,96 @@
+﻿{
+    "Items": [
+        {
+            "Images": [
+                {
+                    "label": "Z18",
+                    "dicom": [
+                        {
+                            "DICOMPatientRecord": "Patient: Anonymous Male 1948.ANONU5NRPE1JD",
+                            "DICOMStudyRecord": "Study: 1.2.752.24.5.3592038503.2019012480928.6091668",
+                            "DICOMSeriesRecord": "Series: 1.3.12.2.1107.5.1.4.83670.30000019012506500249900042780",
+                            "DICOMImageRecord": "Image: 1.3.12.2.1107.5.1.4.83670.30000019012506500249900043050.DICOM",
+                            "imageSource": "D:/Other Projects/Hololens4Pathology and Radiology/Pancreas_T2747-19/T2747-19/radiology/Pictures/DICOM\\0000EB09\\AAB20886\\AA273869\\000054D8\\EE604CEF",
+                            "imageIndexStart": 270,
+                            "imageIndexEnd": 274,
+                            "P1x": -168.36749267578126,
+                            "P1y": -132.6199951171875,
+                            "P2x": -168.36749267578126,
+                            "P2y": 379.3800048828125,
+                            "P3x": 343.63250732421877,
+                            "P3y": 379.3800048828125,
+                            "P4x": 343.63250732421877,
+                            "P4y": -132.6199951171875
+                        }
+                    ],
+                    "macro": [
+                        {
+                            "label": "Z18",
+                            "imageSource": "D:/Other Projects/Hololens4Pathology and Radiology/Pancreas_T2747-19/T2747-19/pathology/2D/T2747-19_macro_1.jpg",
+                            "imageZoomLevel": 0,
+                            "P1x": -469.90704345703127,
+                            "P1y": -512.8316650390625,
+                            "P2x": -469.90704345703127,
+                            "P2y": 1791.1683349609375,
+                            "P3x": 2986.093017578125,
+                            "P3y": 1791.1683349609375,
+                            "P4x": 2986.093017578125,
+                            "P4y": -512.8316650390625
+                        }
+                    ],
+                    "histology": [
+                        {
+                            "imageSource": "D:/Other Projects/Hololens4Pathology and Radiology/Pancreas_T2747-19/T2747-19/histology/T2747-19-Z18.ndpi"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Images": [
+                {
+                    "label": "AAA",
+                    "dicom": [
+                        {
+                            "DICOMPatientRecord": "Patient: Anonymous Male 1948.ANONU5NRPE1JD",
+                            "DICOMStudyRecord": "Study: 1.2.752.24.5.3592038503.2019012480928.6091668",
+                            "DICOMSeriesRecord": "Series: 1.3.12.2.1107.5.1.4.83670.30000019012506500249900042780",
+                            "DICOMImageRecord": "Image: 1.3.12.2.1107.5.1.4.83670.30000019012506500249900043050.DICOM",
+                            "imageSource": "D:/Other Projects/Hololens4Pathology and Radiology/Pancreas_T2747-19/T2747-19/radiology/Pictures/DICOM\\0000EB09\\AAB20886\\AA273869\\000054D8\\EE604CEF",
+                            "imageIndexStart": 270,
+                            "imageIndexEnd": 274,
+                            "P1x": -168.36749267578126,
+                            "P1y": -132.6199951171875,
+                            "P2x": -168.36749267578126,
+                            "P2y": 379.3800048828125,
+                            "P3x": 343.63250732421877,
+                            "P3y": 379.3800048828125,
+                            "P4x": 343.63250732421877,
+                            "P4y": -132.6199951171875
+                        }
+                    ],
+                    "macro": [
+                        {
+                            "label": "AAA",
+                            "imageSource": "D:/Other Projects/Hololens4Pathology and Radiology/Pancreas_T2747-19/T2747-19/pathology/2D/T2747-19_macro_1.jpg",
+                            "imageZoomLevel": 0,
+                            "P1x": -469.90704345703127,
+                            "P1y": -512.8316650390625,
+                            "P2x": -469.90704345703127,
+                            "P2y": 1791.1683349609375,
+                            "P3x": 2986.093017578125,
+                            "P3y": 1791.1683349609375,
+                            "P4x": 2986.093017578125,
+                            "P4y": -512.8316650390625
+                        }
+                    ],
+                    "histology": [
+                        {
+                            "imageSource": "D:/Other Projects/Hololens4Pathology and Radiology/Pancreas_T2747-19/T2747-19/histology/T2747-19-Z18.ndpi"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
