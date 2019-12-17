@@ -530,7 +530,8 @@ MonoBehaviour:
   defaultPath: D:\Other Projects\Hololens4Pathology and Radiology\Pancreas_T2747-19\pathology\2D
   WorkArea: {fileID: 1324518820}
   PathologyMacroHandler: {fileID: 0}
-  previewWindowPrefab: {fileID: 0}
+  previewWindowPrefab: {fileID: 3991321646245835753, guid: 2324b72705dab7c489fc6ecab1ebfc03,
+    type: 3}
 --- !u!1 &250598010
 GameObject:
   m_ObjectHideFlags: 0
@@ -2456,7 +2457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workArea: {fileID: 1324518820}
-  labelText: {fileID: 0}
+  labelText: {fileID: 2104370049}
   outputDirectory: D:\Other Projects\Hololens4Pathology and Radiology\Pancreas_T2747-19
   imageConnections: []
 --- !u!114 &1801882791
@@ -3259,7 +3260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2118414238
 RectTransform:
   m_ObjectHideFlags: 0
